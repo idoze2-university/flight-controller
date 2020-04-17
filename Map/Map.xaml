@@ -10,8 +10,8 @@
         <Grid.Effect>
             <DropShadowEffect/>
         </Grid.Effect>
-        <m:Map x:Name="map" CredentialsProvider="AttsGkqIHCOIEA11KtQZDphl5bi8lppin64jeg-ZOOhiS4cdHA_EXJwHSbyZi4Xo" Mode="Road" ZoomLevel="16" Center="21.3814681,-157.7118886" Margin="2,142,387.667,1" Opacity="0.73">
-            <m:Pushpin x:Name="Pin" Foreground="White" Opacity="0.9" m:MapLayer.Position="{Binding pin_location}">
+        <m:Map x:Name="map" CredentialsProvider="AttsGkqIHCOIEA11KtQZDphl5bi8lppin64jeg-ZOOhiS4cdHA_EXJwHSbyZi4Xo" Mode="Road" ZoomLevel="16" Center="{Binding pin_location_string}" Margin="2,142,387.667,1" Opacity="0.73">
+            <m:Pushpin x:Name="Pin" Foreground="White" Opacity="0.9" Location="{Binding pin_location_string}" m:MapLayer.Position="{Binding pin_location}">
                 <m:Pushpin.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF4100FF" Offset="0"/>

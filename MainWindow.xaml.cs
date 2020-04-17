@@ -9,6 +9,7 @@ namespace FlightSimulatorApp
         public MainWindow()
         {
             InitializeComponent();
+            Connector.Client.Start(5402);
         }
 
     }

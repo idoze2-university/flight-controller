@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using FlightSimulatorApp.Components;
+using System.Threading;
 namespace FlightSimulatorApp.Map
 {
     /// <summary>
