@@ -8,7 +8,7 @@ namespace FlightSimulatorApp.Components
     {
         private static ViewModel singleton = null;
         private Model model;
-        private ViewModel() {model = new Model();}
+        private ViewModel() { model = new Model(); }
         public static ViewModel getInstance()
         {
             if (singleton != null)
@@ -184,11 +184,14 @@ namespace FlightSimulatorApp.Components
             }
         }
 
-        public Thickness point_margin { get { return _point_margin; } 
-            set {
+        public Thickness point_margin
+        {
+            get { return _point_margin; }
+            set
+            {
                 rudder = value.Left;
-                elevator = value.Top; 
-            } 
+                elevator = value.Top;
+            }
         }
         //------------------------------------------------//
 
@@ -200,42 +203,74 @@ namespace FlightSimulatorApp.Components
         public double airspeed
         {
             get { return _airspeed; }
-            set { NotifyPropertyChanged("airspeed"); }
+            set
+            {
+                _airspeed = value;
+                NotifyPropertyChanged("airspeed");
+            }
         }
         public double altimeter_altitude
         {
             get { return _altimeter_altitude; }
-            set { NotifyPropertyChanged("altimeter_altitude"); }
+            set
+            {
+                _altimeter_altitude = value;
+                NotifyPropertyChanged("altimeter_altitude");
+            }
         }
         public double altitude
         {
             get { return _altitude; }
-            set { NotifyPropertyChanged("altitude"); }
+            set
+            {
+                _altitude = value;
+                NotifyPropertyChanged("altitude");
+            }
         }
         public double ground_speed
         {
             get { return _ground_speed; }
-            set { NotifyPropertyChanged("ground_speed"); }
+            set
+            {
+                _ground_speed = value;
+                NotifyPropertyChanged("ground_speed");
+            }
         }
         public double heading_deg
         {
             get { return _heading_deg; }
-            set { NotifyPropertyChanged("heading_deg"); }
+            set
+            {
+                _heading_deg = value;
+                NotifyPropertyChanged("heading_deg");
+            }
         }
         public double internal_pitch
         {
             get { return _internal_pitch; }
-            set { NotifyPropertyChanged("internal_pitch"); }
+            set
+            {
+                _internal_pitch = value;
+                NotifyPropertyChanged("internal_pitch");
+            }
         }
         public double internal_roll
         {
             get { return _internal_roll; }
-            set { NotifyPropertyChanged("internal_roll"); }
+            set
+            {
+                _internal_roll = value;
+                NotifyPropertyChanged("internal_roll");
+            }
         }
         public double vertical_speed
         {
             get { return _vertical_speed; }
-            set { NotifyPropertyChanged("vertical_speed"); }
+            set
+            {
+                _vertical_speed = value;
+                NotifyPropertyChanged("vertical_speed");
+            }
         }
         //------------------------------------------------//
 
@@ -251,8 +286,14 @@ namespace FlightSimulatorApp.Components
                 _pin_location.Latitude = _pin_x;
                 NotifyPropertyChanged("pin_x");
                 NotifyPropertyChanged("pin_location");
+                NotifyPropertyChanged("pin_location_string");
             }
         }
+        public string pin_location_string
+        {
+            get { return string.Format("{0},{1}", _pin_x, _pin_y); }
+        }
+
         public double pin_y
         {
             get { return _pin_y; }
@@ -262,6 +303,7 @@ namespace FlightSimulatorApp.Components
                 _pin_location.Longitude = _pin_y;
                 NotifyPropertyChanged("pin_y");
                 NotifyPropertyChanged("pin_location");
+                NotifyPropertyChanged("pin_location_string");
             }
         }
         public Location pin_location
@@ -274,16 +316,16 @@ namespace FlightSimulatorApp.Components
         }
         //------------------------------------------------//
 
-        public void Command(Enum command,object data)
+        public void Command(Enum command, object data)
         {
             switch (command)
             {
                 case Commands.Commands.KNOB_MOVE_CMD:
-                    Thickness t= model.Knob_Move(data);
+                    Thickness t = model.Knob_Move(data);
                     point_margin = t;
                     break;
                 case Commands.Commands.KNOB_RELEASE_CMD:
-                    Thickness t1 =model.Knob_Release();
+                    Thickness t1 = model.Knob_Release();
                     point_margin = t1;
                     break;
             }
