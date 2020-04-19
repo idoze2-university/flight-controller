@@ -5,6 +5,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Text;
 using FlightSimulatorApp.Components;
+using System.Configuration;
 
 namespace FlightSimulatorApp.Connector
 {
@@ -12,28 +13,30 @@ namespace FlightSimulatorApp.Connector
     public class Client
     {
         public static Socket clientSocket;
-        public static void Start(int port)
+        public static void Start()
         {
             Thread t = new Thread(() =>
             {
                 while (true)
-                    RunClient(port);
-            });
-            t.IsBackground = true;
+                    RunClient(int.Parse(ConfigurationManager.AppSettings["port"]));
+            })
+            {
+                IsBackground = true
+            };
             t.Start();
         }
         public static void RunClient(int port)
         {
-            // Data buffer for incoming data.  
+            // Data buffer for incoming data.
 
-            // Connect to a remote device.  
+            // Connect to a remote device.
             try
             {
-                // Establish the remote endpoint for the socket.  
-                IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 5402);
+                // Establish the remote endpoint for the socket.
+                IPAddress ipAddress = IPAddress.Parse(ConfigurationManager.AppSettings["ip"]);
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
-                // Create a TCP/IP  socket.  
+                // Create a TCP/IP  socket.
                 clientSocket = new Socket(ipAddress.AddressFamily,
                      SocketType.Stream, ProtocolType.Tcp);
 
@@ -42,7 +45,7 @@ namespace FlightSimulatorApp.Connector
                 {
                     try
                     {
-                        // Connect the socket to the remote endpoint. Catch any errors.  
+                        // Connect the socket to the remote endpoint. Catch any errors.
                         clientSocket.Connect(remoteEP);
                         Console.WriteLine("Socket connected to {0}", clientSocket.RemoteEndPoint.ToString());
                         connected = true;
@@ -205,13 +208,13 @@ namespace FlightSimulatorApp.Connector
         {
             byte[] bytes = new byte[1024];
 
-            // Encode the data string into a byte array.  
+            // Encode the data string into a byte array.
             byte[] msg = Encoding.ASCII.GetBytes(string.Format("get {0}\n", key));
 
-            // Send the data through the socket.  
+            // Send the data through the socket.
             clientSocket.Send(msg);
 
-            // Receive the response from the remote device.  
+            // Receive the response from the remote device.
             int bytesRec = clientSocket.Receive(bytes);
             string data = Encoding.ASCII.GetString(bytes, 0, bytesRec);
             return double.Parse(data);
@@ -221,13 +224,13 @@ namespace FlightSimulatorApp.Connector
         {
             byte[] bytes = new byte[1024];
 
-            // Encode the data string into a byte array.  
+            // Encode the data string into a byte array.
             byte[] msg = Encoding.ASCII.GetBytes(string.Format("set {0} {1}\n", key, value));
 
-            // Send the data through the socket.  
+            // Send the data through the socket.
             clientSocket.Send(msg);
 
-            // Receive the response from the remote device.  
+            // Receive the response from the remote device.
             int bytesRec = clientSocket.Receive(bytes);
             string data = Encoding.ASCII.GetString(bytes, 0, bytesRec);
         }

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Configuration;
 namespace FlightSimulatorApp
 {
     /// <summary>
@@ -9,7 +10,7 @@ namespace FlightSimulatorApp
         public MainWindow()
         {
             InitializeComponent();
-            Connector.Client.Start(5402);
+            Connector.Client.Start();
         }
 
     }
